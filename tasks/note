@@ -1,0 +1,80 @@
+    <script>
+        var j = ${jsonString};
+
+        function renderTable(jsonObj) {
+            let tableHeader = renderTableHeader(jsonObj);
+            let tableBody = renderTableBody(jsonObj);
+            document.body.innerHTML += '<table>' + tableHeader + tableBody + '</table>';
+        }
+
+        function renderTableBody(jsonObj) {
+
+            let tableBody = '';
+            let rowsCount = jsonObj.length;
+            for (let i = 0; i < rowsCount; i++) {
+                tableBody += '<tr>' + renderColum(jsonObj[i]) + '</tr>';
+            }
+            return tableBody;
+        }
+
+        //todo сделать рекурсивно
+        function renderColum(Obj) {
+            let tableBodyRow = '';
+
+            for (let key in Obj) {
+                let val = Obj[key];
+                if (typeof val === 'object') {
+                    val = addListOption(val);
+                    tableBodyRow += '<td>' + val + '</td>';
+                } else tableBodyRow += '<td><input class="tableInput" type="text" value="' + val + '"></td>';
+            }
+            return tableBodyRow;
+        }
+
+        function renderTableHeader(jsonObj) {
+            let tableHeader = '';
+            if (jsonObj) {
+                for (let key in jsonObj[0]) {
+                    tableHeader += '<td class="tableHeader">' + key + '</td>';
+                }
+            }
+            return tableHeader;
+        }
+
+        function addListOption(Obj) {
+            let strList = '';
+            for (let key in Obj) {
+                strList += '<option value="">' + key + '</option>';
+                // strList += `<span>${key} = ${Obj[key]}</span> <br>`;
+            }
+            strList = '<select>' + strList + '</select>';
+            // strList = '<span>' + strList + '</span>';
+            return strList;
+        }
+
+        renderTable(j);
+
+    </script>
+
+    	@RequestMapping(value = "/cashFlow", method = RequestMethod.GET)
+    	public String getCashFlowGuide(Model model) {
+    		List list = service.getAllItems();
+    		String jsonString = JSON.toJSONString(list);
+
+    		System.err.println(list.get(0));
+    		System.out.println(list.get(0));
+
+    		model.addAttribute("jsonString", jsonString);
+
+
+    		model.addAttribute("list", list);
+    		return "/cashFlow";
+    	}
+
+
+    	        <!-- json parser -->
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                    <version>1.2.47</version>
+                </dependency>
