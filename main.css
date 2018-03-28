@@ -1,0 +1,39 @@
+table{
+    /*font-size: 0px;*/
+    border-collapse: collapse;
+}
+.tableHeader{
+    background-color: darkgray;
+    text-align: center;
+    font-weight: 900;
+}
+
+
+tr:nth-child(even){
+    background-color: white;
+}
+
+tr:nth-child(odd){
+    background-color: lightgray;
+}
+
+td,tr {
+    border: 1px solid black;
+    /*font-size: 16px;*/
+}
+select{
+    border: none;
+    background: none;
+}
+
+.tableInput{
+    width: 100%;
+    background:none;
+    border: none;
+    outline:none;
+}
+
+
+tr:hover{
+    background-color: lightblue;
+}
